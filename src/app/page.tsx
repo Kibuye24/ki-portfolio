@@ -78,7 +78,7 @@ export default function Home() {
           <h1 className="font-burtons text-xl hidden md:flex">
             <Link href="#">ki.dev</Link>
           </h1>
-          <ul className="flex flex-row gap-x-8">
+          <ul className="flex flex-row gap-x-6 md:gap-x-8">
             <li>
               <a href="#about">About</a>
             </li>
@@ -309,7 +309,7 @@ export default function Home() {
               <p className="font-bold">Technologies used:</p>
               <p>React, Typescript, Node.JS, MongoDB, TailwindCSS</p>
               <div className="flex justify-evenly my-4">
-                <button className="bg-emerald-300 px-2 rounded-full shadow-xl">
+                <button className="dark:bg-red-400 bg-emerald-300 px-2 rounded-full shadow-xl">
                   <Link href="https://justavision.netlify.app" target="_blank">
                     Live Site
                   </Link>
@@ -336,7 +336,7 @@ export default function Home() {
               <p className="font-bold">Technologies used:</p>
               <p>React, Typescript, Node.JS, MongoDB, MaterialUI</p>
               <div className="flex justify-evenly my-4">
-                <button className="bg-emerald-300 px-2 rounded-full shadow-xl">
+                <button className="dark:bg-red-400 bg-emerald-300 px-2 rounded-full shadow-xl">
                   <Link
                     href="https://propertiescrm.netlify.app"
                     target="_blank"
