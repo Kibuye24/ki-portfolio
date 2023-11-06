@@ -117,7 +117,7 @@ export default function Home() {
                   working on{" "}
                   <Link
                     className="text-sky-900 dark:text-yellow-500"
-                    href="https://justavision.netlify.app"
+                    href="https://justavision.co.ke"
                     target="_blank"
                   >
                     JustaVision
@@ -257,6 +257,21 @@ export default function Home() {
                 Experience
               </h3>
               <div>
+                <p className="font-bold">Reaction Power</p>
+                <p>Data Analyst</p>
+                <p>April 2023 - Present</p>
+                <div>
+                  <p className="font-bold">Responsibilities</p>
+                  <ul className="list-disc">
+                    <li>Data reporting and visualization</li>
+                    <li>Social media analytics</li>
+                    <li>Audience insights</li>
+                    <li>Perfomance tracking</li>
+                    <li>Wordpress developmnet</li>
+                  </ul>
+                </div>
+              </div>
+              <div>
                 <p className="font-bold">Self-Employed</p>
                 <p>Freelance Writing</p>
                 <p>Dec 2017 - Present</p>
@@ -297,7 +312,38 @@ export default function Home() {
           <h1 className="font-bold text-2xl p-3 dark:text-yellow-500">
             Portfolio
           </h1>
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-4 justify-start">
+            <div className="p-4 shadow-xl rounded-md dark:bg-slate-900 relative dark:text-gray-300 bg-[#fcfcfc] w-[280px]">
+              <Image src={about4} alt="about-4" width={400} height={300} />
+              <p className="font-bold my-2">Defitech - Crypto news website</p>
+              <p className="my-2">
+                This is a full-stack application for an upcoming crypto currency
+                news site for a client where I only handle the frontend. The
+                project displays my knowledge on building complex front-end apps
+                with dynamic rendering.
+              </p>
+              <p className="font-bold">Technologies used:</p>
+              <p>
+                Next JS, Typescript, REST Apis, MongoDB, TailwindCSS,
+                Cloudinary, SSG/SSR
+              </p>
+              <div className="flex justify-evenly my-4">
+                <button className="dark:bg-red-400 bg-emerald-300 px-2 rounded-full shadow-xl">
+                  <Link href="https://defitech.vercel.app" target="_blank">
+                    Live Site
+                  </Link>
+                </button>
+                <button className="bg-black px-2 rounded-full shadow-xl">
+                  <Link
+                    href="https://github.com/Kibuye24/defitech"
+                    target="_blank"
+                    className="text-white"
+                  >
+                    Github
+                  </Link>
+                </button>
+              </div>
+            </div>
             <div className="p-4 shadow-xl rounded-md dark:bg-slate-900  dark:text-gray-300 bg-[#fcfcfc] w-[280px]">
               <Image src={about4} alt="about-4" width={400} height={300} />
               <p className="font-bold my-2">Just A Vision</p>
@@ -310,7 +356,7 @@ export default function Home() {
               <p>React, Typescript, Node.JS, MongoDB, TailwindCSS</p>
               <div className="flex justify-evenly my-4">
                 <button className="dark:bg-red-400 bg-emerald-300 px-2 rounded-full shadow-xl">
-                  <Link href="https://justavision.netlify.app" target="_blank">
+                  <Link href="https://justavision.co.ke" target="_blank">
                     Live Site
                   </Link>
                 </button>
