@@ -8,122 +8,10 @@ import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
+import { projects as allProjects, type ProjectCategory } from "../lib/data";
+
 /* ─── Projects Data ───────────────────────────────────────────────── */
 
-type ProjectCategory = "all" | "fullstack" | "ai";
-
-interface Project {
-    title: string;
-    description: string;
-    tags: string[];
-    color: string;
-    category: ProjectCategory[];
-    year: string;
-    num: string;
-}
-
-const allProjects: Project[] = [
-    {
-        title: "NexusFlow AI Platform",
-        description:
-            "Enterprise AI orchestration platform using LLM-powered agents. Automates complex workflows at scale with intelligent routing and multi-model support.",
-        tags: ["AI/ML", "Next.js", "Python", "AWS", "LangChain"],
-        color: "#c8ff00",
-        category: ["ai", "fullstack"],
-        year: "2024",
-        num: "01",
-    },
-    {
-        title: "HealthBridge Analytics",
-        description:
-            "Real-time health data analytics dashboard. Processes millions of records with sub-second response times across distributed systems.",
-        tags: ["React", "D3.js", "PostgreSQL", "Docker", "Redis"],
-        color: "#6366f1",
-        category: ["fullstack"],
-        year: "2024",
-        num: "02",
-    },
-    {
-        title: "Sentinel AI Monitor",
-        description:
-            "AI-powered infrastructure monitoring predicting server failures before they happen. Anomaly detection and time-series forecasting for 99.99% uptime.",
-        tags: ["Python", "TensorFlow", "Grafana", "Kubernetes"],
-        color: "#ef4444",
-        category: ["ai"],
-        year: "2023",
-        num: "03",
-    },
-    {
-        title: "EduConnect LMS",
-        description:
-            "Modern learning management system for African institutions with adaptive learning paths, offline-first capabilities, and AI content recommendations.",
-        tags: ["TypeScript", "Node.js", "MongoDB", "PWA"],
-        color: "#f59e0b",
-        category: ["fullstack"],
-        year: "2023",
-        num: "04",
-    },
-    {
-        title: "AgriSense IoT",
-        description:
-            "IoT precision agriculture platform with real-time soil, weather, and crop health insights. ML models predict optimal planting and harvesting cycles.",
-        tags: ["IoT", "React Native", "Firebase", "ML"],
-        color: "#10b981",
-        category: ["ai", "fullstack"],
-        year: "2023",
-        num: "05",
-    },
-    {
-        title: "MarketPulse Dashboard",
-        description:
-            "Financial analytics platform providing real-time market insights, portfolio tracking, and AI-generated trade signals for institutional investors.",
-        tags: ["Next.js", "Python", "FastAPI", "WebSocket"],
-        color: "#8b5cf6",
-        category: ["ai", "fullstack"],
-        year: "2022",
-        num: "06",
-    },
-    {
-        title: "CloudSync CMS",
-        description:
-            "Headless CMS with real-time collaboration, versioning, and multi-tenant architecture serving content to 50+ client applications.",
-        tags: ["React", "Node.js", "GraphQL", "PostgreSQL"],
-        color: "#06b6d4",
-        category: ["fullstack"],
-        year: "2022",
-        num: "07",
-    },
-    {
-        title: "VoiceBot Engine",
-        description:
-            "Conversational AI engine powering customer support. Handles 10K+ daily conversations with NLU and sentiment analysis.",
-        tags: ["NLP", "Python", "FastAPI", "OpenAI"],
-        color: "#f97316",
-        category: ["ai"],
-        year: "2022",
-        num: "08",
-    },
-    {
-        title: "Nexus Design System",
-        description:
-            "Comprehensive component library and design system used across 12+ products with accessible components and automated visual regression testing.",
-        tags: ["React", "TypeScript", "Storybook", "Figma"],
-        color: "#ec4899",
-        category: ["fullstack"],
-        year: "2021",
-        num: "09",
-    },
-    {
-        title: "DataWeave ETL",
-        description:
-            "Scalable ETL pipeline processing 2TB+ of data daily. Transforms raw data from multiple sources into actionable insights.",
-        tags: ["Python", "Apache Spark", "Airflow", "AWS"],
-        color: "#14b8a6",
-        category: ["ai", "fullstack"],
-        year: "2021",
-        num: "10",
-    },
-];
 
 const filters = [
     { id: "all" as ProjectCategory, label: "All" },
@@ -333,8 +221,8 @@ export default function WorkPage() {
                                     <span key={t} className="wf-tag">{t}</span>
                                 ))}
                             </div>
-                            <a href="#" className="work-featured-link">
-                                <span>Explore Project</span>
+                            <a href={featured.url || "#"} target="_blank" rel="noopener noreferrer" className="work-featured-link">
+                                <span>{featured.url ? "View Live Site" : "Explore Project"}</span>
                                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
                                     <path d="M2 16L16 2M16 2H6M16 2v10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
@@ -347,7 +235,9 @@ export default function WorkPage() {
                 <div ref={gridRef} className="work-grid">
                     {rest.map((project, i) => (
                         <a
-                            href="#"
+                            href={project.url || "#"}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className={`work-card ${i === 0 || i === 3 ? "work-card-wide" : ""}`}
                             key={`${activeFilter}-${project.num}`}
                             style={{ "--card-accent": project.color } as React.CSSProperties}
@@ -416,7 +306,7 @@ export default function WorkPage() {
 
             {/* ═══ Footer ═══ */}
             <footer className="footer">
-                <span>© 2025 Joshua Kibuye</span>
+                <span>© 2026 Joshua Kibuye</span>
                 <div className="footer-right">
                     <span style={{ color: "var(--text-muted)" }}>Designed &amp; Built with passion</span>
                 </div>

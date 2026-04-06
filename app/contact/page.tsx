@@ -4,14 +4,15 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navigation from "../components/Navigation";
+import { contact } from "../lib/data";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const socials = [
     {
         label: "Email",
-        href: "mailto:hello@joshuakibuye.com",
-        value: "hello@joshuakibuye.com",
+        href: `mailto:${contact.email}`,
+        value: contact.email,
         icon: (
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <rect x="2" y="4" width="16" height="12" rx="2" stroke="currentColor" strokeWidth="1.4" />
@@ -21,8 +22,8 @@ const socials = [
     },
     {
         label: "GitHub",
-        href: "https://github.com/kibuye",
-        value: "github.com/kibuye",
+        href: contact.github,
+        value: "github.com/Kibuye24",
         icon: (
             <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M10 0C4.477 0 0 4.477 0 10c0 4.42 2.865 8.166 6.839 9.49.5.09.682-.217.682-.482 0-.237-.009-1.025-.013-1.862-2.513.546-3.163-.616-3.363-1.175-.113-.288-.6-1.175-1.025-1.413-.35-.187-.85-.65-.013-.663.788-.012 1.35.725 1.538.913.9 1.512 2.338 1.087 2.912.825.088-.65.35-1.088.638-1.338-2.225-.25-4.55-1.112-4.55-4.937 0-1.088.387-1.988 1.025-2.688-.1-.25-.45-1.275.1-2.65 0 0 .837-.262 2.75 1.025a9.28 9.28 0 015 0c1.912-1.3 2.75-1.025 2.75-1.025.55 1.375.2 2.4.1 2.65.637.7 1.025 1.587 1.025 2.688 0 3.837-2.337 4.687-4.562 4.937.362.312.675.912.675 1.85 0 1.337-.013 2.412-.013 2.75 0 .262.175.575.688.475A10.016 10.016 0 0020 10c0-5.523-4.477-10-10-10z" />
@@ -31,8 +32,8 @@ const socials = [
     },
     {
         label: "LinkedIn",
-        href: "https://linkedin.com/in/joshuakibuye",
-        value: "linkedin.com/in/joshuakibuye",
+        href: contact.linkedin,
+        value: "linkedin.com/in/joshua-kibuye-2ab4b6140",
         icon: (
             <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M0 1.433C0 .642.657 0 1.469 0h17.062C19.343 0 20 .642 20 1.433v17.134c0 .791-.657 1.433-1.469 1.433H1.469C.657 20 0 19.358 0 18.567V1.433zM6.178 16.737V7.712H3.178v9.025h3zm-1.5-10.265c1.046 0 1.698-.693 1.698-1.56-.02-.886-.652-1.56-1.678-1.56S3.019 3.926 3.019 4.812c0 .867.652 1.56 1.64 1.56h.02zM10.834 16.737v-5.036c0-.269.02-.538.098-.731.217-.538.71-1.097 1.54-1.097 1.087 0 1.521.828 1.521 2.042v4.822h3v-5.168c0-2.769-1.478-4.056-3.45-4.056-1.593 0-2.307.878-2.709 1.49v.032h-.02l.02-.031V7.712h-3c.04.867 0 9.025 0 9.025h3z" />
@@ -41,8 +42,8 @@ const socials = [
     },
     {
         label: "Twitter / X",
-        href: "https://twitter.com/joshuakibuye",
-        value: "@joshuakibuye",
+        href: contact.twitter,
+        value: "@KibuyeJosh",
         icon: (
             <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M15.75.938h3.068l-6.7 7.678L20 19.063h-6.17l-4.834-6.338-5.532 6.338H.396l7.167-8.212L0 .938h6.328l4.37 5.79L15.75.937zm-1.075 16.285h1.7L5.404 2.68H3.58l11.094 14.543z" />
@@ -51,16 +52,46 @@ const socials = [
     },
 ];
 
+
 export default function ContactPage() {
     const mainRef = useRef<HTMLDivElement>(null);
     const [formStatus, setFormStatus] = useState<"idle" | "sending" | "sent">("idle");
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const formRef = useRef<HTMLFormElement>(null);
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setFormStatus("sending");
-        // Simulate form submit
-        setTimeout(() => setFormStatus("sent"), 1500);
+
+        const formData = new FormData(e.currentTarget);
+        const name = formData.get("name");
+        const email = formData.get("email");
+        const subject = formData.get("subject");
+        const message = formData.get("message");
+
+        try {
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, subject, message }),
+            });
+
+            if (response.ok) {
+                setFormStatus("sent");
+                formRef.current?.reset();
+            } else {
+                const error = await response.json();
+                console.error("Submission failed:", error);
+                setFormStatus("idle");
+                alert("Something went wrong. Please try again later.");
+            }
+        } catch (error) {
+            console.error("Submission error:", error);
+            setFormStatus("idle");
+            alert("Connection error. Please check your internet and try again.");
+        }
     };
+
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -178,27 +209,28 @@ export default function ContactPage() {
                                 </button>
                             </div>
                         ) : (
-                            <form onSubmit={handleSubmit} className="contact-form">
+                            <form ref={formRef} onSubmit={handleSubmit} className="contact-form">
                                 <div className="form-row">
                                     <div className="form-group">
                                         <label htmlFor="name" className="form-label">Name</label>
-                                        <input type="text" id="name" className="form-input" placeholder="Joshua Kibuye" required />
+                                        <input type="text" id="name" name="name" className="form-input" placeholder="Joshua Kibuye" required />
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="email" className="form-label">Email</label>
-                                        <input type="email" id="email" className="form-input" placeholder="you@example.com" required />
+                                        <input type="email" id="email" name="email" className="form-input" placeholder="you@example.com" required />
                                     </div>
                                 </div>
 
                                 <div className="form-group">
                                     <label htmlFor="subject" className="form-label">Subject</label>
-                                    <input type="text" id="subject" className="form-input" placeholder="Project collaboration, question, idea..." required />
+                                    <input type="text" id="subject" name="subject" className="form-input" placeholder="Project collaboration, question, idea..." required />
                                 </div>
 
                                 <div className="form-group">
                                     <label htmlFor="message" className="form-label">Message</label>
-                                    <textarea id="message" className="form-textarea" rows={6} placeholder="Tell me about your project or idea..." required />
+                                    <textarea id="message" name="message" className="form-textarea" rows={6} placeholder="Tell me about your project or idea..." required />
                                 </div>
+
 
                                 <button
                                     type="submit"
@@ -228,8 +260,8 @@ export default function ContactPage() {
                         <div className="contact-info-card reveal-scale">
                             <h3>Direct Contact</h3>
                             <p>Prefer email? Reach out directly and I&apos;ll respond within 24 hours.</p>
-                            <a href="mailto:hello@joshuakibuye.com" className="contact-direct-email">
-                                hello@joshuakibuye.com
+                            <a href={`mailto:${contact.email}`} className="contact-direct-email">
+                                {contact.email}
                             </a>
                         </div>
 
@@ -261,7 +293,7 @@ export default function ContactPage() {
 
             {/* ═══ Footer ═══ */}
             <footer className="footer">
-                <span>© 2025 Joshua Kibuye</span>
+                <span>© 2026 Joshua Kibuye</span>
                 <div className="footer-right">
                     <span style={{ color: "var(--text-muted)" }}>Designed &amp; Built with passion</span>
                 </div>

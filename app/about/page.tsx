@@ -312,7 +312,7 @@ export default function AboutPage() {
             </section>
 
             <footer className="footer">
-                <span>© 2025 Joshua Kibuye</span>
+                <span>© 2026 Joshua Kibuye</span>
                 <div className="footer-right">
                     <span style={{ color: "var(--text-muted)" }}>Designed & Built with passion</span>
                 </div>

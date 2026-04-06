@@ -9,77 +9,13 @@ import Illustrations, { RocketSVG } from "./components/Illustrations";
 
 gsap.registerPlugin(ScrollTrigger);
 
+import { projects as allProjects, experiences, contact } from "./lib/data";
+
 /* ─── Data ────────────────────────────────────────────────────────── */
 
-const projects = [
-  {
-    title: "NexusFlow AI Platform",
-    description:
-      "An enterprise AI orchestration platform that streamlines workflows using LLM-powered agents. Built for organizations looking to automate complex processes at scale.",
-    tags: ["AI/ML", "Next.js", "Python", "AWS"],
-    color: "#c8ff00",
-    featured: true,
-  },
-  {
-    title: "HealthBridge Analytics",
-    description:
-      "Real-time health data analytics dashboard enabling healthcare providers to make data-driven decisions. Processes millions of records with sub-second response times.",
-    tags: ["React", "D3.js", "PostgreSQL", "Docker"],
-    color: "#6366f1",
-    featured: false,
-  },
-  {
-    title: "EduConnect LMS",
-    description:
-      "A modern learning management system built for African institutions, featuring adaptive learning paths and offline-first capabilities.",
-    tags: ["TypeScript", "Node.js", "MongoDB", "PWA"],
-    color: "#f59e0b",
-    featured: false,
-  },
-  {
-    title: "AgriSense IoT",
-    description:
-      "IoT-powered precision agriculture platform connecting farmers with real-time soil, weather, and crop health insights.",
-    tags: ["IoT", "React Native", "Firebase", "ML"],
-    color: "#10b981",
-    featured: false,
-  },
-];
+const projects = allProjects.filter(p => p.featured).slice(0, 3);
+const experience = experiences;
 
-const experience = [
-  {
-    period: "2024 — Present",
-    role: "Lead Software Engineer",
-    company: "Nexus Data & Design",
-    description:
-      "Leading a cross-functional team building AI-powered digital products for enterprise clients. Architecting scalable solutions and driving innovation strategy.",
-    tech: ["Next.js", "Python", "AWS", "OpenAI", "Docker"],
-  },
-  {
-    period: "2022 — 2024",
-    role: "Senior Full-Stack Developer",
-    company: "Innovation Hub",
-    description:
-      "Developed high-performance web applications serving 100K+ users. Implemented CI/CD pipelines and microservices architecture, reducing deployment time by 60%.",
-    tech: ["React", "Node.js", "PostgreSQL", "Kubernetes", "Redis"],
-  },
-  {
-    period: "2020 — 2022",
-    role: "Software Engineer",
-    company: "TechForward Labs",
-    description:
-      "Built data-driven applications and integrated ML models into production systems. Shipped predictive analytics features used by enterprise clients.",
-    tech: ["TypeScript", "Python", "TensorFlow", "GCP", "GraphQL"],
-  },
-  {
-    period: "2018 — 2020",
-    role: "Junior Developer",
-    company: "Digital Solutions Co.",
-    description:
-      "Contributed to full-stack web applications, designed RESTful APIs, and built interactive front-end experiences for diverse clients.",
-    tech: ["JavaScript", "React", "Express", "MongoDB"],
-  },
-];
 
 /* ─── Reveal helper: uses ScrollTrigger.batch with gsap.to ─── */
 
@@ -352,12 +288,13 @@ export default function Home() {
                 </div>
                 <h3 className="project-title">{project.title}</h3>
                 <p className="project-description">{project.description}</p>
-                <a href="#" className="project-link">
-                  View Project
+                <a href={project.url || "#"} target="_blank" rel="noopener noreferrer" className="project-link">
+                  {project.url ? "View Live" : "View Project"}
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                     <path d="M1 13L13 1M13 1H5M13 1v8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </a>
+
               </div>
             </div>
           ))}
@@ -424,29 +361,30 @@ export default function Home() {
             organization — I&apos;d love to hear from you.
           </p>
           <div className="contact-links reveal-up">
-            <a href="mailto:hello@joshuakibuye.com" className="contact-link">
+            <a href={`mailto:${contact.email}`} className="contact-link">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4l6 4 6-4M2 4v8h12V4H2z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" /></svg>
               Email
             </a>
-            <a href="https://github.com/kibuye" target="_blank" className="contact-link">
+            <a href={contact.github} target="_blank" className="contact-link">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z" /></svg>
               GitHub
             </a>
-            <a href="https://linkedin.com/in/joshuakibuye" target="_blank" className="contact-link">
+            <a href={contact.linkedin} target="_blank" className="contact-link">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169H7.043c.032.694 0 7.225 0 7.225h2.608z" /></svg>
               LinkedIn
             </a>
-            <a href="https://twitter.com/joshuakibuye" target="_blank" className="contact-link">
+            <a href={contact.twitter} target="_blank" className="contact-link">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75zm-.86 13.028h1.36L4.323 2.145H2.865l8.875 11.633z" /></svg>
               Twitter / X
             </a>
           </div>
+
         </div>
       </section>
 
       {/* ═══ Footer ═══ */}
       <footer className="footer">
-        <span>© 2025 Joshua Kibuye</span>
+        <span>© 2026 Joshua Kibuye</span>
         <div className="footer-right">
           <span style={{ color: "var(--text-muted)" }}>Designed &amp; Built with passion</span>
         </div>
